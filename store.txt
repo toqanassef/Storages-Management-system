@@ -1,0 +1,14 @@
+{ storeid = 1, name = aaa, address = alex, manager = aaam }
+{ code = 1, name = a, quantity = 10, expiredate = 11/1/2021 12:00:00 AM }
+{ code = 1, name = a, quantity = 12, expiredate = 12/31/2021 12:00:00 AM }
+{ code = 2, name = b, quantity = 5, expiredate = 4/1/2010 12:00:00 AM }
+
+{ storeid = 2, name = bbb, address = sssnn, manager = bbbm }
+{ code = 1, name = a, quantity = 25, expiredate = 1/1/2022 12:00:00 AM }
+
+{ storeid = 3, name = zzzbb, address = cccxx, manager = cccm }
+
+{ storeid = 4, name = ddd, address = ddd, manager = dddm }
+
+{ storeid = 5, name = fff, address = fff, manager = fffm }
+

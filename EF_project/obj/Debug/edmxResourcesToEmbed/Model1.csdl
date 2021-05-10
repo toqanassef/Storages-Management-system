@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectEFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="telephone" Type="Int32" />
+    <Property Name="fax" Type="Int32" />
+    <Property Name="mobile" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="web" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="outResiets" Relationship="Self.FK_outResiet_customer" FromRole="customer" ToRole="outResiet" />
+  </EntityType>
+  <EntityType Name="item">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="outResiet">
+    <Key>
+      <PropertyRef Name="num" />
+    </Key>
+    <Property Name="num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="store_id" Type="Int32" />
+    <Property Name="date" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="customer_id" Type="Int32" />
+    <NavigationProperty Name="customer" Relationship="Self.FK_outResiet_customer" FromRole="outResiet" ToRole="customer" />
+    <NavigationProperty Name="store" Relationship="Self.FK_outResiet_store" FromRole="outResiet" ToRole="store" />
+  </EntityType>
+  <EntityType Name="store">
+    <Key>
+      <PropertyRef Name="storeid" />
+    </Key>
+    <Property Name="storeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="manager" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="outResiets" Relationship="Self.FK_outResiet_store" FromRole="store" ToRole="outResiet" />
+    <NavigationProperty Name="suplyResets" Relationship="Self.FK_suplyReset_store" FromRole="store" ToRole="suplyReset" />
+  </EntityType>
+  <EntityType Name="suplyReset">
+    <Key>
+      <PropertyRef Name="num" />
+    </Key>
+    <Property Name="num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="supplier_id" Type="Int32" />
+    <Property Name="store_id" Type="Int32" />
+    <NavigationProperty Name="store" Relationship="Self.FK_suplyReset_store" FromRole="suplyReset" ToRole="store" />
+    <NavigationProperty Name="supplier" Relationship="Self.FK_suplyReset_supplier" FromRole="suplyReset" ToRole="supplier" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="telephone" Type="Int32" />
+    <Property Name="fax" Type="Int32" />
+    <Property Name="mobile" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="web" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="suplyResets" Relationship="Self.FK_suplyReset_supplier" FromRole="supplier" ToRole="suplyReset" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_outResiet_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="outResiet">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_outResiet_store">
+    <End Role="store" Type="Self.store" Multiplicity="0..1" />
+    <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="store">
+        <PropertyRef Name="storeid" />
+      </Principal>
+      <Dependent Role="outResiet">
+        <PropertyRef Name="store_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_suplyReset_store">
+    <End Role="store" Type="Self.store" Multiplicity="0..1" />
+    <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="store">
+        <PropertyRef Name="storeid" />
+      </Principal>
+      <Dependent Role="suplyReset">
+        <PropertyRef Name="store_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_suplyReset_supplier">
+    <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
+    <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supplier">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suplyReset">
+        <PropertyRef Name="supplier_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projectEFEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="customers" EntityType="Self.customer" />
+    <EntitySet Name="items" EntityType="Self.item" />
+    <EntitySet Name="outResiets" EntityType="Self.outResiet" />
+    <EntitySet Name="stores" EntityType="Self.store" />
+    <EntitySet Name="suplyResets" EntityType="Self.suplyReset" />
+    <EntitySet Name="suppliers" EntityType="Self.supplier" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_outResiet_customer" Association="Self.FK_outResiet_customer">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="outResiet" EntitySet="outResiets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_outResiet_store" Association="Self.FK_outResiet_store">
+      <End Role="store" EntitySet="stores" />
+      <End Role="outResiet" EntitySet="outResiets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_suplyReset_store" Association="Self.FK_suplyReset_store">
+      <End Role="store" EntitySet="stores" />
+      <End Role="suplyReset" EntitySet="suplyResets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_suplyReset_supplier" Association="Self.FK_suplyReset_supplier">
+      <End Role="supplier" EntitySet="suppliers" />
+      <End Role="suplyReset" EntitySet="suplyResets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

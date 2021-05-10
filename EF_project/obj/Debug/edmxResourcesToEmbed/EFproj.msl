@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="projectEFModelStoreContainer" CdmEntityContainer="projectEFEnt">
+    <EntitySetMapping Name="items">
+      <EntityTypeMapping TypeName="projectEFModel.item">
+        <MappingFragment StoreEntitySet="item">
+          <ScalarProperty Name="measure_unit" ColumnName="measure_unit" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="outResiets">
+      <EntityTypeMapping TypeName="projectEFModel.outResiet">
+        <MappingFragment StoreEntitySet="outResiet">
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="store_id" ColumnName="store_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stores">
+      <EntityTypeMapping TypeName="projectEFModel.store">
+        <MappingFragment StoreEntitySet="store">
+          <ScalarProperty Name="storeid" ColumnName="storeid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="manager" ColumnName="manager" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="suplyResets">
+      <EntityTypeMapping TypeName="projectEFModel.suplyReset">
+        <MappingFragment StoreEntitySet="suplyReset">
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+          <ScalarProperty Name="store_id" ColumnName="store_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="projectEFModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="out_product">
+      <EntityTypeMapping TypeName="projectEFModel.out_product">
+        <MappingFragment StoreEntitySet="out_product">
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="outresiet_num" ColumnName="outresiet_num" />
+          <ScalarProperty Name="item_code" ColumnName="item_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="store_product">
+      <EntityTypeMapping TypeName="projectEFModel.store_product">
+        <MappingFragment StoreEntitySet="store_product">
+          <ScalarProperty Name="expiredate" ColumnName="expiredate" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="storeid" ColumnName="storeid" />
+          <ScalarProperty Name="itemcode" ColumnName="itemcode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="supplies">
+      <EntityTypeMapping TypeName="projectEFModel.supply">
+        <MappingFragment StoreEntitySet="supply">
+          <ScalarProperty Name="web" ColumnName="web" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customs">
+      <EntityTypeMapping TypeName="projectEFModel.custom">
+        <MappingFragment StoreEntitySet="custom">
+          <ScalarProperty Name="web" ColumnName="web" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="in_product">
+      <EntityTypeMapping TypeName="projectEFModel.in_product">
+        <MappingFragment StoreEntitySet="in_product">
+          <ScalarProperty Name="validity" ColumnName="validity" />
+          <ScalarProperty Name="expired_date" ColumnName="expired_date" />
+          <ScalarProperty Name="production_date" ColumnName="production_date" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="inresiet_num" ColumnName="inresiet_num" />
+          <ScalarProperty Name="item_code" ColumnName="item_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

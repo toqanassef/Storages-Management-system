@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6aaad54eae9b489d8970ff61e60116c8" Name="Diagram1">
+        <EntityTypeShape EntityType="projectEFModel.item" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectEFModel.outResiet" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectEFModel.store" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectEFModel.suplyReset" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectEFModel.sysdiagram" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="projectEFModel.FK_outResiet_store" ManuallyRouted="false" />
+        <AssociationConnector Association="projectEFModel.FK_suplyReset_store" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="projectEFModel.out_product" Width="1.5" PointX="11" PointY="3.125" />
+        <EntityTypeShape EntityType="projectEFModel.store_product" Width="1.5" PointX="8" PointY="5" />
+        <AssociationConnector Association="projectEFModel.FK_out_product_item" />
+        <AssociationConnector Association="projectEFModel.FK_store_product_item" />
+        <AssociationConnector Association="projectEFModel.FK_out_product_outResiet" />
+        <AssociationConnector Association="projectEFModel.FK_store_product_store" />
+        <EntityTypeShape EntityType="projectEFModel.supply" Width="1.5" PointX="5.375" PointY="9" />
+        <AssociationConnector Association="projectEFModel.FK_suplyReset_supply" />
+        <EntityTypeShape EntityType="projectEFModel.custom" Width="1.5" PointX="7.375" PointY="9" />
+        <AssociationConnector Association="projectEFModel.FK_outResiet_custom" />
+        <EntityTypeShape EntityType="projectEFModel.in_product" Width="1.5" PointX="8" PointY="1.125" />
+        <AssociationConnector Association="projectEFModel.FK_in_product_item" />
+        <AssociationConnector Association="projectEFModel.FK_in_product_suplyReset" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="projectEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="custom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="15" />
+          <Property Name="telephone" Type="int" />
+          <Property Name="fax" Type="int" />
+          <Property Name="mobile" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="web" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="in_product">
+          <Key>
+            <PropertyRef Name="item_code" />
+            <PropertyRef Name="inresiet_num" />
+          </Key>
+          <Property Name="item_code" Type="int" Nullable="false" />
+          <Property Name="inresiet_num" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="production_date" Type="date" Nullable="false" />
+          <Property Name="expired_date" Type="date" />
+          <Property Name="validity" Type="int" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="measure_unit" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="out_product">
+          <Key>
+            <PropertyRef Name="item_code" />
+            <PropertyRef Name="outresiet_num" />
+          </Key>
+          <Property Name="item_code" Type="int" Nullable="false" />
+          <Property Name="outresiet_num" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="outResiet">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="store_id" Type="int" />
+          <Property Name="date" Type="varchar" MaxLength="15" />
+          <Property Name="customer_id" Type="int" />
+        </EntityType>
+        <EntityType Name="store">
+          <Key>
+            <PropertyRef Name="storeid" />
+          </Key>
+          <Property Name="storeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="50" />
+          <Property Name="manager" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="store_product">
+          <Key>
+            <PropertyRef Name="itemcode" />
+            <PropertyRef Name="storeid" />
+            <PropertyRef Name="expiredate" />
+          </Key>
+          <Property Name="itemcode" Type="int" Nullable="false" />
+          <Property Name="storeid" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="expiredate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="suplyReset">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="varchar" MaxLength="15" />
+          <Property Name="supplier_id" Type="int" />
+          <Property Name="store_id" Type="int" />
+        </EntityType>
+        <EntityType Name="supply">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="15" />
+          <Property Name="telephone" Type="int" />
+          <Property Name="fax" Type="int" />
+          <Property Name="mobile" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="web" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_in_product_item">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="in_product" Type="Self.in_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="in_product">
+              <PropertyRef Name="item_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_product_suplyReset">
+          <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="1" />
+          <End Role="in_product" Type="Self.in_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suplyReset">
+              <PropertyRef Name="num" />
+            </Principal>
+            <Dependent Role="in_product">
+              <PropertyRef Name="inresiet_num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_out_product_item">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="out_product" Type="Self.out_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="out_product">
+              <PropertyRef Name="item_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_out_product_outResiet">
+          <End Role="outResiet" Type="Self.outResiet" Multiplicity="1" />
+          <End Role="out_product" Type="Self.out_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="outResiet">
+              <PropertyRef Name="num" />
+            </Principal>
+            <Dependent Role="out_product">
+              <PropertyRef Name="outresiet_num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_outResiet_custom">
+          <End Role="custom" Type="Self.custom" Multiplicity="0..1" />
+          <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="custom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="outResiet">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_outResiet_store">
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="outResiet">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_product_item">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="store_product" Type="Self.store_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="store_product">
+              <PropertyRef Name="itemcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_product_store">
+          <End Role="store" Type="Self.store" Multiplicity="1" />
+          <End Role="store_product" Type="Self.store_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="store_product">
+              <PropertyRef Name="storeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_suplyReset_store">
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="suplyReset">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_suplyReset_supply">
+          <End Role="supply" Type="Self.supply" Multiplicity="0..1" />
+          <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supply">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suplyReset">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="projectEFModelStoreContainer">
+          <EntitySet Name="custom" EntityType="Self.custom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="in_product" EntityType="Self.in_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="item" EntityType="Self.item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="out_product" EntityType="Self.out_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="outResiet" EntityType="Self.outResiet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="store_product" EntityType="Self.store_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suplyReset" EntityType="Self.suplyReset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supply" EntityType="Self.supply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_in_product_item" Association="Self.FK_in_product_item">
+            <End Role="item" EntitySet="item" />
+            <End Role="in_product" EntitySet="in_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_product_suplyReset" Association="Self.FK_in_product_suplyReset">
+            <End Role="suplyReset" EntitySet="suplyReset" />
+            <End Role="in_product" EntitySet="in_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_out_product_item" Association="Self.FK_out_product_item">
+            <End Role="item" EntitySet="item" />
+            <End Role="out_product" EntitySet="out_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_out_product_outResiet" Association="Self.FK_out_product_outResiet">
+            <End Role="outResiet" EntitySet="outResiet" />
+            <End Role="out_product" EntitySet="out_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_outResiet_custom" Association="Self.FK_outResiet_custom">
+            <End Role="custom" EntitySet="custom" />
+            <End Role="outResiet" EntitySet="outResiet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_outResiet_store" Association="Self.FK_outResiet_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="outResiet" EntitySet="outResiet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_product_item" Association="Self.FK_store_product_item">
+            <End Role="item" EntitySet="item" />
+            <End Role="store_product" EntitySet="store_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_product_store" Association="Self.FK_store_product_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="store_product" EntitySet="store_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suplyReset_store" Association="Self.FK_suplyReset_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="suplyReset" EntitySet="suplyReset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suplyReset_supply" Association="Self.FK_suplyReset_supply">
+            <End Role="supply" EntitySet="supply" />
+            <End Role="suplyReset" EntitySet="suplyReset" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="projectEFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="out_product" Relationship="projectEFModel.FK_out_product_item" FromRole="item" ToRole="out_product" />
+          <NavigationProperty Name="store_product" Relationship="projectEFModel.FK_store_product_item" FromRole="item" ToRole="store_product" />
+          <Property Name="measure_unit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="in_product" Relationship="projectEFModel.FK_in_product_item" FromRole="item" ToRole="in_product" />
+        </EntityType>
+        <EntityType Name="outResiet">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="store_id" Type="Int32" />
+          <Property Name="date" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="customer_id" Type="Int32" />
+          <NavigationProperty Name="store" Relationship="Self.FK_outResiet_store" FromRole="outResiet" ToRole="store" />
+          <NavigationProperty Name="out_product" Relationship="projectEFModel.FK_out_product_outResiet" FromRole="outResiet" ToRole="out_product" />
+          <NavigationProperty Name="custom" Relationship="projectEFModel.FK_outResiet_custom" FromRole="outResiet" ToRole="custom" />
+        </EntityType>
+        <EntityType Name="store">
+          <Key>
+            <PropertyRef Name="storeid" />
+          </Key>
+          <Property Name="storeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="manager" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="outResiets" Relationship="Self.FK_outResiet_store" FromRole="store" ToRole="outResiet" />
+          <NavigationProperty Name="suplyResets" Relationship="Self.FK_suplyReset_store" FromRole="store" ToRole="suplyReset" />
+          <NavigationProperty Name="store_product" Relationship="projectEFModel.FK_store_product_store" FromRole="store" ToRole="store_product" />
+        </EntityType>
+        <EntityType Name="suplyReset">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="supplier_id" Type="Int32" />
+          <Property Name="store_id" Type="Int32" />
+          <NavigationProperty Name="store" Relationship="Self.FK_suplyReset_store" FromRole="suplyReset" ToRole="store" />
+          <NavigationProperty Name="supply" Relationship="projectEFModel.FK_suplyReset_supply" FromRole="suplyReset" ToRole="supply" />
+          <NavigationProperty Name="in_product" Relationship="projectEFModel.FK_in_product_suplyReset" FromRole="suplyReset" ToRole="in_product" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_outResiet_store">
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="outResiet">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_suplyReset_store">
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="suplyReset">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="projectEFEnt" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="outResiets" EntityType="Self.outResiet" />
+          <EntitySet Name="stores" EntityType="Self.store" />
+          <EntitySet Name="suplyResets" EntityType="Self.suplyReset" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_outResiet_store" Association="Self.FK_outResiet_store">
+            <End Role="store" EntitySet="stores" />
+            <End Role="outResiet" EntitySet="outResiets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suplyReset_store" Association="Self.FK_suplyReset_store">
+            <End Role="store" EntitySet="stores" />
+            <End Role="suplyReset" EntitySet="suplyResets" />
+          </AssociationSet>
+          <EntitySet Name="out_product" EntityType="projectEFModel.out_product" />
+          <EntitySet Name="store_product" EntityType="projectEFModel.store_product" />
+          <AssociationSet Name="FK_out_product_item" Association="projectEFModel.FK_out_product_item">
+            <End Role="item" EntitySet="items" />
+            <End Role="out_product" EntitySet="out_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_product_item" Association="projectEFModel.FK_store_product_item">
+            <End Role="item" EntitySet="items" />
+            <End Role="store_product" EntitySet="store_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_out_product_outResiet" Association="projectEFModel.FK_out_product_outResiet">
+            <End Role="outResiet" EntitySet="outResiets" />
+            <End Role="out_product" EntitySet="out_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_product_store" Association="projectEFModel.FK_store_product_store">
+            <End Role="store" EntitySet="stores" />
+            <End Role="store_product" EntitySet="store_product" />
+          </AssociationSet>
+          <EntitySet Name="supplies" EntityType="projectEFModel.supply" />
+          <AssociationSet Name="FK_suplyReset_supply" Association="projectEFModel.FK_suplyReset_supply">
+            <End Role="supply" EntitySet="supplies" />
+            <End Role="suplyReset" EntitySet="suplyResets" />
+          </AssociationSet>
+          <EntitySet Name="customs" EntityType="projectEFModel.custom" />
+          <AssociationSet Name="FK_outResiet_custom" Association="projectEFModel.FK_outResiet_custom">
+            <End Role="custom" EntitySet="customs" />
+            <End Role="outResiet" EntitySet="outResiets" />
+          </AssociationSet>
+          <EntitySet Name="in_product" EntityType="projectEFModel.in_product" />
+          <AssociationSet Name="FK_in_product_item" Association="projectEFModel.FK_in_product_item">
+            <End Role="item" EntitySet="items" />
+            <End Role="in_product" EntitySet="in_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_product_suplyReset" Association="projectEFModel.FK_in_product_suplyReset">
+            <End Role="suplyReset" EntitySet="suplyResets" />
+            <End Role="in_product" EntitySet="in_product" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="out_product">
+          <Key>
+            <PropertyRef Name="item_code" />
+            <PropertyRef Name="outresiet_num" />
+          </Key>
+          <Property Name="item_code" Type="Int32" Nullable="false" />
+          <Property Name="outresiet_num" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="item" Relationship="projectEFModel.FK_out_product_item" FromRole="out_product" ToRole="item" />
+          <NavigationProperty Name="outResiet" Relationship="projectEFModel.FK_out_product_outResiet" FromRole="out_product" ToRole="outResiet" />
+        </EntityType>
+        <EntityType Name="store_product">
+          <Key>
+            <PropertyRef Name="itemcode" />
+            <PropertyRef Name="storeid" />
+            <PropertyRef Name="expiredate" />
+          </Key>
+          <Property Name="itemcode" Type="Int32" Nullable="false" />
+          <Property Name="storeid" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="expiredate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="item" Relationship="projectEFModel.FK_store_product_item" FromRole="store_product" ToRole="item" />
+          <NavigationProperty Name="store" Relationship="projectEFModel.FK_store_product_store" FromRole="store_product" ToRole="store" />
+        </EntityType>
+        <Association Name="FK_out_product_item">
+          <End Type="projectEFModel.item" Role="item" Multiplicity="1" />
+          <End Type="projectEFModel.out_product" Role="out_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="out_product">
+              <PropertyRef Name="item_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_product_item">
+          <End Type="projectEFModel.item" Role="item" Multiplicity="1" />
+          <End Type="projectEFModel.store_product" Role="store_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="store_product">
+              <PropertyRef Name="itemcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_out_product_outResiet">
+          <End Type="projectEFModel.outResiet" Role="outResiet" Multiplicity="1" />
+          <End Type="projectEFModel.out_product" Role="out_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="outResiet">
+              <PropertyRef Name="num" />
+            </Principal>
+            <Dependent Role="out_product">
+              <PropertyRef Name="outresiet_num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_product_store">
+          <End Type="projectEFModel.store" Role="store" Multiplicity="1" />
+          <End Type="projectEFModel.store_product" Role="store_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="storeid" />
+            </Principal>
+            <Dependent Role="store_product">
+              <PropertyRef Name="storeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="supply">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="telephone" Type="Int32" />
+          <Property Name="fax" Type="Int32" />
+          <Property Name="mobile" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="web" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="suplyResets" Relationship="projectEFModel.FK_suplyReset_supply" FromRole="supply" ToRole="suplyReset" />
+        </EntityType>
+        <Association Name="FK_suplyReset_supply">
+          <End Type="projectEFModel.supply" Role="supply" Multiplicity="0..1" />
+          <End Type="projectEFModel.suplyReset" Role="suplyReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supply">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suplyReset">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="custom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="telephone" Type="Int32" />
+          <Property Name="fax" Type="Int32" />
+          <Property Name="mobile" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="web" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="outResiets" Relationship="projectEFModel.FK_outResiet_custom" FromRole="custom" ToRole="outResiet" />
+        </EntityType>
+        <Association Name="FK_outResiet_custom">
+          <End Type="projectEFModel.custom" Role="custom" Multiplicity="0..1" />
+          <End Type="projectEFModel.outResiet" Role="outResiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="custom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="outResiet">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="in_product">
+          <Key>
+            <PropertyRef Name="item_code" />
+            <PropertyRef Name="inresiet_num" />
+          </Key>
+          <Property Name="item_code" Type="Int32" Nullable="false" />
+          <Property Name="inresiet_num" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="production_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="expired_date" Type="DateTime" Precision="0" />
+          <Property Name="validity" Type="Int32" />
+          <NavigationProperty Name="item" Relationship="projectEFModel.FK_in_product_item" FromRole="in_product" ToRole="item" />
+          <NavigationProperty Name="suplyReset" Relationship="projectEFModel.FK_in_product_suplyReset" FromRole="in_product" ToRole="suplyReset" />
+        </EntityType>
+        <Association Name="FK_in_product_item">
+          <End Type="projectEFModel.item" Role="item" Multiplicity="1" />
+          <End Type="projectEFModel.in_product" Role="in_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="in_product">
+              <PropertyRef Name="item_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_product_suplyReset">
+          <End Type="projectEFModel.suplyReset" Role="suplyReset" Multiplicity="1" />
+          <End Type="projectEFModel.in_product" Role="in_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suplyReset">
+              <PropertyRef Name="num" />
+            </Principal>
+            <Dependent Role="in_product">
+              <PropertyRef Name="inresiet_num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="projectEFModelStoreContainer" CdmEntityContainer="projectEFEnt">
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="projectEFModel.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="measure_unit" ColumnName="measure_unit" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="outResiets">
+            <EntityTypeMapping TypeName="projectEFModel.outResiet">
+              <MappingFragment StoreEntitySet="outResiet">
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stores">
+            <EntityTypeMapping TypeName="projectEFModel.store">
+              <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="storeid" ColumnName="storeid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="manager" ColumnName="manager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suplyResets">
+            <EntityTypeMapping TypeName="projectEFModel.suplyReset">
+              <MappingFragment StoreEntitySet="suplyReset">
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="projectEFModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="out_product">
+            <EntityTypeMapping TypeName="projectEFModel.out_product">
+              <MappingFragment StoreEntitySet="out_product">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="outresiet_num" ColumnName="outresiet_num" />
+                <ScalarProperty Name="item_code" ColumnName="item_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="store_product">
+            <EntityTypeMapping TypeName="projectEFModel.store_product">
+              <MappingFragment StoreEntitySet="store_product">
+                <ScalarProperty Name="expiredate" ColumnName="expiredate" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="storeid" ColumnName="storeid" />
+                <ScalarProperty Name="itemcode" ColumnName="itemcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplies">
+            <EntityTypeMapping TypeName="projectEFModel.supply">
+              <MappingFragment StoreEntitySet="supply">
+                <ScalarProperty Name="web" ColumnName="web" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customs">
+            <EntityTypeMapping TypeName="projectEFModel.custom">
+              <MappingFragment StoreEntitySet="custom">
+                <ScalarProperty Name="web" ColumnName="web" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_product">
+            <EntityTypeMapping TypeName="projectEFModel.in_product">
+              <MappingFragment StoreEntitySet="in_product">
+                <ScalarProperty Name="validity" ColumnName="validity" />
+                <ScalarProperty Name="expired_date" ColumnName="expired_date" />
+                <ScalarProperty Name="production_date" ColumnName="production_date" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="inresiet_num" ColumnName="inresiet_num" />
+                <ScalarProperty Name="item_code" ColumnName="item_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

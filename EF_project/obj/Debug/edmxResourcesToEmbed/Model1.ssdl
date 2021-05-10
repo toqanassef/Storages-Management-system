@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="15" />
+    <Property Name="telephone" Type="int" />
+    <Property Name="fax" Type="int" />
+    <Property Name="mobile" Type="int" />
+    <Property Name="email" Type="nchar" MaxLength="30" />
+    <Property Name="web" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'projectEF.dbo.in_items' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="in_items">
+          <Property Name="item_code" Type="int" />
+          <Property Name="inresiet_num" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="validity" Type="varchar" MaxLength="10" />
+          <Property Name="production_date" Type="date" />
+        </EntityType>-->
+  <EntityType Name="item">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'projectEF.dbo.item-store' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="item-store">
+          <Property Name="itemcode" Type="int" />
+          <Property Name="storeid" Type="int" />
+          <Property Name="expire_date" Type="date" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'projectEF.dbo.out_items' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="out_items">
+          <Property Name="item_code" Type="int" />
+          <Property Name="outresiet_num" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>-->
+  <EntityType Name="outResiet">
+    <Key>
+      <PropertyRef Name="num" />
+    </Key>
+    <Property Name="num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="store_id" Type="int" />
+    <Property Name="date" Type="varchar" MaxLength="15" />
+    <Property Name="customer_id" Type="int" />
+  </EntityType>
+  <EntityType Name="store">
+    <Key>
+      <PropertyRef Name="storeid" />
+    </Key>
+    <Property Name="storeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="20" />
+    <Property Name="address" Type="varchar" MaxLength="50" />
+    <Property Name="manager" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="suplyReset">
+    <Key>
+      <PropertyRef Name="num" />
+    </Key>
+    <Property Name="num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="varchar" MaxLength="15" />
+    <Property Name="supplier_id" Type="int" />
+    <Property Name="store_id" Type="int" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="15" />
+    <Property Name="telephone" Type="int" />
+    <Property Name="fax" Type="int" />
+    <Property Name="mobile" Type="int" />
+    <Property Name="email" Type="nchar" MaxLength="30" />
+    <Property Name="web" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+error 6004: The table 'projectEF.dbo.in_items' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_in_items_item" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'projectEF.dbo.in_items' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_in_items_suplyReset" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'projectEF.dbo.out_items' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_out_items_item" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'projectEF.dbo.out_items' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_out_items_outResiet" />-->
+  <Association Name="FK_outResiet_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="outResiet">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_outResiet_store">
+    <End Role="store" Type="Self.store" Multiplicity="0..1" />
+    <End Role="outResiet" Type="Self.outResiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="store">
+        <PropertyRef Name="storeid" />
+      </Principal>
+      <Dependent Role="outResiet">
+        <PropertyRef Name="store_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_suplyReset_store">
+    <End Role="store" Type="Self.store" Multiplicity="0..1" />
+    <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="store">
+        <PropertyRef Name="storeid" />
+      </Principal>
+      <Dependent Role="suplyReset">
+        <PropertyRef Name="store_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_suplyReset_supplier">
+    <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
+    <End Role="suplyReset" Type="Self.suplyReset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supplier">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suplyReset">
+        <PropertyRef Name="supplier_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projectEFModelStoreContainer">
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="item" EntityType="Self.item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="outResiet" EntityType="Self.outResiet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="suplyReset" EntityType="Self.suplyReset" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_outResiet_customer" Association="Self.FK_outResiet_customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="outResiet" EntitySet="outResiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_outResiet_store" Association="Self.FK_outResiet_store">
+      <End Role="store" EntitySet="store" />
+      <End Role="outResiet" EntitySet="outResiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_suplyReset_store" Association="Self.FK_suplyReset_store">
+      <End Role="store" EntitySet="store" />
+      <End Role="suplyReset" EntitySet="suplyReset" />
+    </AssociationSet>
+    <AssociationSet Name="FK_suplyReset_supplier" Association="Self.FK_suplyReset_supplier">
+      <End Role="supplier" EntitySet="supplier" />
+      <End Role="suplyReset" EntitySet="suplyReset" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
